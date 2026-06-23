@@ -1,0 +1,13 @@
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+}
+
+:root {
+  --font-display: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --font-serif: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --font-body: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+}

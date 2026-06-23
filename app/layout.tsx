@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "./pretendard.css";
 
 export const metadata: Metadata = {
   title: "Save Earth - Power Monitor",
@@ -15,7 +16,7 @@ export default function RootLayout({
       <head>
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
       </head>
       <body>{children}</body>
