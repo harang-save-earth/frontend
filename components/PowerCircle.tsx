@@ -4,34 +4,55 @@ import { useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import gsap from 'gsap'
 
-const Circle = styled.div`
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
+const Orb = styled.div`
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 9999px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 30%, #1f6feb33, #0d1117);
-  border: 2px solid #1f6feb;
-  box-shadow: 0 0 40px #1f6feb55;
+  /* Atmospheric pastel orb — decoration only, no saturated accent */
+  background:
+    radial-gradient(circle at 36% 28%, rgba(168, 200, 232, 0.55), transparent 58%),
+    radial-gradient(circle at 72% 76%, rgba(167, 229, 211, 0.45), transparent 56%),
+    var(--surface-card);
+  border: 1px solid var(--hairline-strong);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+
+  @media (max-width: 640px) {
+    width: 260px;
+    height: 260px;
+  }
 `
 
 const ValueText = styled.span`
-  font-size: 64px;
-  font-weight: 700;
-  color: #fff;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 88px;
   line-height: 1;
+  letter-spacing: -1.92px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+
+  @media (max-width: 640px) {
+    font-size: 64px;
+  }
 `
 
 const Unit = styled.span`
-  margin-top: 8px;
-  font-size: 20px;
-  color: #8b949e;
+  margin-top: 14px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+  color: var(--muted);
 `
 
 export function PowerCircle({ value }: { value: number | null }) {
-  const circleRef = useRef<HTMLDivElement>(null)
+  const orbRef = useRef<HTMLDivElement>(null)
   const numberRef = useRef<HTMLSpanElement>(null)
   const prev = useRef(0)
 
@@ -52,25 +73,25 @@ export function PowerCircle({ value }: { value: number | null }) {
     })
     prev.current = value
 
-    // 수신 시 원 펄스
-    const pulseTween = circleRef.current
+    // 수신 시 오브가 은은하게 피어오름 (조용한 분위기 효과)
+    const bloomTween = orbRef.current
       ? gsap.fromTo(
-          circleRef.current,
+          orbRef.current,
           { scale: 1 },
-          { scale: 1.06, duration: 0.2, yoyo: true, repeat: 1, ease: 'power1.inOut' }
+          { scale: 1.015, duration: 0.45, yoyo: true, repeat: 1, ease: 'sine.inOut' }
         )
       : null
 
     return () => {
       countupTween.kill()
-      pulseTween?.kill()
+      bloomTween?.kill()
     }
   }, [value])
 
   return (
-    <Circle ref={circleRef}>
-      <ValueText ref={numberRef}>{value === null ? '--' : value.toFixed(1)}</ValueText>
+    <Orb ref={orbRef}>
+      <ValueText ref={numberRef}>{value === null ? '—' : value.toFixed(1)}</ValueText>
       <Unit>Wh</Unit>
-    </Circle>
+    </Orb>
   )
 }

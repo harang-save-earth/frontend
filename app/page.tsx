@@ -5,35 +5,76 @@ import { useMqttPower, type ConnectionStatus } from '@/hooks/useMqttPower'
 import { PowerCircle } from '@/components/PowerCircle'
 
 const Main = styled.main`
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 32px;
-  background: #0d1117;
+  gap: 48px;
+  background: var(--canvas);
+  padding: 24px;
+`
+
+const Header = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+`
+
+const Eyebrow = styled.span`
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+  color: var(--muted);
 `
 
 const Title = styled.h1`
-  color: #fff;
-  font-size: 28px;
-  font-weight: 600;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.96px;
+  color: var(--ink);
+
+  @media (max-width: 640px) {
+    font-size: 32px;
+  }
 `
 
-const Status = styled.div<{ $color: string }>`
-  display: flex;
+const StatusBadge = styled.div`
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  color: ${(p) => p.$color};
-  font-size: 14px;
+  gap: 8px;
+  background: var(--surface-strong);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.96px;
+  text-transform: uppercase;
+  color: var(--body);
 `
 
-const STATUS_META: Record<ConnectionStatus, { icon: string; color: string; label: string }> = {
-  connecting: { icon: 'sync', color: '#d29922', label: '연결 중' },
-  connected: { icon: 'check_circle', color: '#3fb950', label: '연결됨' },
-  reconnecting: { icon: 'sync', color: '#d29922', label: '재연결 중' },
-  error: { icon: 'error', color: '#f85149', label: '오류' },
-  closed: { icon: 'cancel', color: '#8b949e', label: '연결 끊김' },
+const Dot = styled.span<{ $color: string }>`
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: ${(p) => p.$color};
+`
+
+const STATUS_META: Record<ConnectionStatus, { color: string; label: string }> = {
+  connecting: { color: 'var(--muted)', label: '연결 중' },
+  connected: { color: 'var(--success)', label: '연결됨' },
+  reconnecting: { color: 'var(--muted)', label: '재연결 중' },
+  error: { color: 'var(--error)', label: '오류' },
+  closed: { color: 'var(--muted-soft)', label: '연결 끊김' },
 }
 
 export default function Home() {
@@ -42,12 +83,15 @@ export default function Home() {
 
   return (
     <Main>
-      <Title>실시간 전력 사용량</Title>
+      <Header>
+        <Eyebrow>Live feed — No. 316</Eyebrow>
+        <Title>실시간 전력 사용량</Title>
+      </Header>
       <PowerCircle value={value} />
-      <Status $color={meta.color}>
-        <span className="material-icons">{meta.icon}</span>
+      <StatusBadge>
+        <Dot $color={meta.color} />
         {meta.label}
-      </Status>
+      </StatusBadge>
     </Main>
   )
 }
