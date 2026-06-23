@@ -20,11 +20,11 @@ const Title = styled.h1`
   font-weight: 600;
 `
 
-const Status = styled.div<{ color: string }>`
+const Status = styled.div<{ $color: string }>`
   display: flex;
   align-items: center;
   gap: 6px;
-  color: ${(p) => p.color};
+  color: ${(p) => p.$color};
   font-size: 14px;
 `
 
@@ -44,7 +44,7 @@ export default function Home() {
     <Main>
       <Title>실시간 전력 사용량</Title>
       <PowerCircle value={value} />
-      <Status color={meta.color}>
+      <Status $color={meta.color}>
         <span className="material-icons">{meta.icon}</span>
         {meta.label}
       </Status>
