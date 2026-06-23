@@ -1,0 +1,56 @@
+:root {
+  /* Surface */
+  --canvas: #f5f5f5;
+  --canvas-soft: #fafafa;
+  --surface-card: #ffffff;
+  --surface-strong: #f0efed;
+
+  /* Ink & text */
+  --ink: #0c0a09;
+  --body: #4e4e4e;
+  --muted: #777169;
+  --muted-soft: #a8a29e;
+
+  /* Hairlines */
+  --hairline: #e7e5e4;
+  --hairline-strong: #d6d3d1;
+
+  /* Atmospheric gradient stops (decoration only) */
+  --gradient-sky: #a8c8e8;
+  --gradient-mint: #a7e5d3;
+
+  /* Semantic */
+  --success: #16a34a;
+  --error: #dc2626;
+
+  /* Type roles */
+  --font-display: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --font-serif: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --font-body: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  letter-spacing: 0.15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
