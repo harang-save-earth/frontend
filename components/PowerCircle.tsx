@@ -17,7 +17,7 @@ const Circle = styled.div`
   box-shadow: 0 0 40px #1f6feb55;
 `
 
-const Number = styled.span`
+const ValueText = styled.span`
   font-size: 64px;
   font-weight: 700;
   color: #fff;
@@ -40,7 +40,7 @@ export function PowerCircle({ value }: { value: number | null }) {
 
     // 숫자 카운트업
     const obj = { n: prev.current }
-    gsap.to(obj, {
+    const countupTween = gsap.to(obj, {
       n: value,
       duration: 0.8,
       ease: 'power2.out',
@@ -53,18 +53,23 @@ export function PowerCircle({ value }: { value: number | null }) {
     prev.current = value
 
     // 수신 시 원 펄스
-    if (circleRef.current) {
-      gsap.fromTo(
-        circleRef.current,
-        { scale: 1 },
-        { scale: 1.06, duration: 0.2, yoyo: true, repeat: 1, ease: 'power1.inOut' }
-      )
+    const pulseTween = circleRef.current
+      ? gsap.fromTo(
+          circleRef.current,
+          { scale: 1 },
+          { scale: 1.06, duration: 0.2, yoyo: true, repeat: 1, ease: 'power1.inOut' }
+        )
+      : null
+
+    return () => {
+      countupTween.kill()
+      pulseTween?.kill()
     }
   }, [value])
 
   return (
     <Circle ref={circleRef}>
-      <Number ref={numberRef}>{value === null ? '--' : value.toFixed(1)}</Number>
+      <ValueText ref={numberRef}>{value === null ? '--' : value.toFixed(1)}</ValueText>
       <Unit>Wh</Unit>
     </Circle>
   )
